@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Copyright (C) 2016 honwen.chan@gmail.com
+#
+
+[ -f /etc/ssh/sshd_config ] || exit0
+
+sed 's/.*PermitRootLogin.*/PermitRootLogin yes/g' -i /etc/ssh/sshd_config
+
+exit 0

@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# Copyright (C) 2017-2025 honwen.chan@gmail.com
+#
+
+[ ! -f /usr/bin/ip ] && ln -sf /sbin/ip /usr/bin/ip
+(opkg list-installed | grep -qF ip-full) && ln -sf /usr/sbin/ip /usr/bin/ip
+
+[ -d /usr/share/vim ] && {
+	ln -s vimrc /usr/share/vim/defaults.vim
+}
+
+sed -i 's/root:::0:99999:7:::/root:$5$M8g4yNPKjR8IWUcQ$4oYmO2pwZOpWKyPPY6tKQ0TAzP3qXshIp7fgJ8kDQp4:20217:0:99999:7:::/g' /etc/shadow
+
+if uname -m | grep -qF 'x86'; then
+	uci set system.@system[0].log_size='2048'
+else
+	uci set system.@system[0].log_size='256'
+fi
+
+[ -x /etc/init.d/rngd ] && {
+	uci -q show system.@rngd[0] || uci batch <<EOF
+	add system rngd
+	set system.@rngd[0].enabled=1
+	set system.@rngd[0].device=/dev/urandom
+	commit system
+EOF
+}
+
+uci set dhcp.lan.force=1
+uci commit dhcp
+
+rm -rf /tmp/luci-*
+
+exit 0

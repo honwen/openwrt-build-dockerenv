@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# Copyright (C) 2016-2022 honwen.chan@gmail.com
+#
+
+sed -i 's/0.*ntp.org/time.apple.com/; s/1.*ntp.org/cn.pool.ntp.org/; s/2.*ntp.org/ntp.tencent.com/; s/3.*ntp.org/ntp.aliyun.com/' /etc/config/system
+
+uci batch <<EOF
+	set system.@system[0].zonename='Asia/Shanghai'
+	set system.@system[0].timezone='CST-8'
+	commit system
+EOF
+
+exit 0

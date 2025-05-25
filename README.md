@@ -1,6 +1,6 @@
 ### Thanks
 
-- https://github.com/openwrt/openwrt/releases/tag/v21.02.7
+- https://github.com/immortalwrt/immortalwrt/releases/tag/v24.10.1
 
 ### Usage
 
@@ -9,6 +9,10 @@
 # setup
 ./setup.sh
 
-# exec; workspace in ~/openwrt/21.02.7
-./exec.sh
+# exec; workspace in ~/immortalwrt/24.10.1
+./exec.sh zsh
+
+cd ~/immortalwrt/24.10.1
+make menuconfig
+make -j32 V=s
 ```

@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Copyright (C) 2017 honwen.chan@gmail.com
+#
+
+[ -f /etc/config/upnpd ] || exit0
+
+uci batch <<EOF
+	set upnpd.config.enabled=1
+	commit upnpd
+EOF
