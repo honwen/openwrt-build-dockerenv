@@ -10,7 +10,7 @@ docker build -t openwrt_builder:bookworm -f ${WORKDIR}/Dockerfile.builder .
 
 imwrt_root=${WORKDIR}/workdir/immortalwrt
 
-imwrt_24_ver='24.10.1'
+imwrt_24_ver='24.10.2'
 imwrt_24=$imwrt_root/$imwrt_24_ver
 
 mkdir -p $imwrt_root
