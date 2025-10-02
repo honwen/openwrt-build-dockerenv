@@ -1,0 +1,8 @@
+{
+  "[shellscript]": {
+    "editor.defaultFormatter": "mkhl.shfmt",
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true
+  },
+  "shfmt.executableArgs": ["-i", "2"]
+}
