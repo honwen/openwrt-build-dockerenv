@@ -11,12 +11,21 @@ ARG TOOLS0="curl wget ca-certificates net-tools procps zsh vim tree tmux 7zip lo
 ARG TOOLS="sudo time git subversion build-essential clang python3-distutils python3-setuptools unzip cpio rsync gawk gettext swig flex file bison"
 ARG LIBS="zlib1g-dev libssl-dev libsnmp-dev liblzma-dev libpam0g-dev libncurses5-dev gcc-multilib g++-multilib"
 
+RUN ln -sf bash /usr/bin/sh
+
 RUN set -ex && cd / \
-    && sed 's+//.*debian.org+//mirrors.tencent.com+g; /^#/d' -i /etc/apt/sources.list.d/debian.sources \
     && echo 'Acquire::http::Pipeline-Depth "0";' >/etc/apt/apt.conf.d/99-optimization.conf \
     && echo 'APT::Get::Update::SourceListWarnings::NonFreeFirmware "false";' >>/etc/apt/apt.conf.d/99-optimization.conf \
+    # && sed 's+//.*debian.org+//mirrors.tencent.com+g; /^#/d' -i /etc/apt/sources.list.d/debian.sources \
+    && sed 's+//.*debian.org+//mirrors.cernet.edu.cn+g; /^#/d' -i /etc/apt/sources.list.d/debian.sources \
+    && apt --allow-releaseinfo-change -y update \
+    && apt install ca-certificates -y \
+    && sed 's+cernet.edu.cn+tencent.com+g' -i /etc/apt/sources.list.d/debian.sources \
     && apt --allow-releaseinfo-change -y update \
     && apt-get install -y --no-install-recommends $TOOLS0 $TOOLS $LIBS \
+    \
+    && echo $TZ > /etc/timezone \
+    && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime \
     \
     && echo -e "LC_ALL=zh_CN.UTF-8\nLANG=zh_CN.UTF-8" | tee -a /etc/environment /etc/locale.conf \
     && echo -e "zh_CN.UTF-8 UTF-8\nen_US.UTF-8 UTF-8" >/etc/locale.gen \
@@ -29,9 +38,6 @@ RUN set -ex && cd / \
     \
     && git -C /tmp clone https://github.com/openwrt-dev/po2lmo --depth 1 \
     && ( cd /tmp/po2lmo && make && make install ) \
-    \
-    && echo $TZ > /etc/timezone \
-    && ln -sf /usr/share/zoneinfo/$TZ /etc/localtime \
     \
     && useradd -m $USER \
     && echo "$USER ALL=NOPASSWD: ALL" >/etc/sudoers.d/$USER \
