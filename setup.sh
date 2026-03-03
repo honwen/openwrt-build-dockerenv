@@ -6,11 +6,11 @@ set -x
 WORKDIR=$(git rev-parse --show-toplevel)
 docker_home="/home/$(sed -n 's+^ARG *USER=++p' $WORKDIR/Dockerfile.builder)"
 
-docker build --pull -t openwrt_builder:bookworm -f ${WORKDIR}/Dockerfile.builder .
+docker build --pull --progress=plain -t openwrt_builder:bookworm -f ${WORKDIR}/Dockerfile.builder .
 
 imwrt_root=${WORKDIR}/workdir/immortalwrt
 
-imwrt_24_ver='24.10.4'
+imwrt_24_ver='24.10.5'
 imwrt_24=$imwrt_root/$imwrt_24_ver
 
 mkdir -p $imwrt_root
