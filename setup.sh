@@ -10,7 +10,7 @@ docker build --pull --progress=plain -t openwrt_builder:bookworm -f ${WORKDIR}/D
 
 imwrt_root=${WORKDIR}/workdir/immortalwrt
 
-imwrt_24_ver='24.10.5'
+imwrt_24_ver='24.10.6'
 imwrt_24=$imwrt_root/$imwrt_24_ver
 
 mkdir -p $imwrt_root
@@ -28,8 +28,8 @@ git -C $imwrt_24 log 2>/dev/null | grep -qF "$imwrt_24_ver" || {
   docker run --rm -i -t -v $(pwd)/workdir:$docker_home --workdir="$docker_home/immortalwrt/$imwrt_24_ver" openwrt_builder:bookworm ./scripts/feeds install -a
 }
 
-rm -rf $imwrt_24/files $imwrt_24/package/feeds/luci/luci-app-homeproxy $imwrt_24/package/feeds/luci/luci-app-passwall $imwrt_24/package/feeds/luci/luci-app-v2raya || :
-rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/packages/xray-core $imwrt_24/package/feeds/packages/xray-plugin $imwrt_24/package/feeds/packages/v2raya || :
+rm -rf $imwrt_24/files $imwrt_24/package/feeds/luci/luci-app-homeproxy $imwrt_24/package/feeds/luci/luci-app-passwall $imwrt_24/package/feeds/luci/luci-app-v2raya $imwrt_24/feeds/luci/luci-app-gost package/feeds/luci/luci-app-frp* || :
+rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/packages/xray-core $imwrt_24/package/feeds/packages/xray-plugin $imwrt_24/package/feeds/packages/v2raya $imwrt_24/feeds/packages/gost package/feeds/packages/frp || :
 
 [ -e $imwrt_24/package/feeds/openwrt-dnsmasq-extra ] ||
   git -C $imwrt_24/package/feeds clone https://github.com/honwen/openwrt-dnsmasq-extra.git --depth=1
