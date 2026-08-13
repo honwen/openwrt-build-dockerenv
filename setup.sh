@@ -29,7 +29,7 @@ git -C $imwrt_24 log 2>/dev/null | grep -qF "$imwrt_24_ver" || {
 }
 
 rm -rf $imwrt_24/files $imwrt_24/package/feeds/luci/luci-app-homeproxy $imwrt_24/package/feeds/luci/luci-app-passwall $imwrt_24/package/feeds/luci/luci-app-v2raya $imwrt_24/feeds/luci/luci-app-gost package/feeds/luci/luci-app-frp* || :
-rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/packages/xray-core $imwrt_24/package/feeds/packages/xray-plugin $imwrt_24/package/feeds/packages/v2raya $imwrt_24/feeds/packages/gost package/feeds/packages/frp || :
+rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/packages/xray-core $imwrt_24/package/feeds/packages/xray-plugin $imwrt_24/package/feeds/packages/v2raya $imwrt_24/feeds/packages/gost$imwrt_24/package/feeds/packages/frp $imwrt_24/package/feeds/packages/hev-socks5-tunnel || :
 
 [ -e $imwrt_24/package/feeds/openwrt-dnsmasq-extra ] ||
   git -C $imwrt_24/package/feeds clone https://github.com/honwen/openwrt-dnsmasq-extra.git --depth=1
