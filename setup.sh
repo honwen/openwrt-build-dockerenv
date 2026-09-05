@@ -37,8 +37,10 @@ rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/package
 [ -e $imwrt_24/package/feeds/openwrt-precompiled-feeds ] ||
   git -C $imwrt_24/package/feeds clone https://github.com/honwen/openwrt-precompiled-feeds.git --depth=1
 
-[ -e $imwrt_24/package/feeds/homeproxy ] ||
-  git -C $imwrt_24/package/feeds clone https://github.com/immortalwrt/homeproxy.git --branch=dev --depth=1
+# [ -e $imwrt_24/package/feeds/homeproxy ] ||
+#   git -C $imwrt_24/package/feeds clone https://github.com/immortalwrt/homeproxy.git --branch=dev --depth=1
+[ -e $imwrt_24/package/feeds/luci-app-homeproxy ] ||
+  git -C $imwrt_24/package/feeds clone https://github.com/szwjp/luci-app-homeproxy.git --depth=1
 
 cp -Rf ${WORKDIR}/extra/files $imwrt_24/
 cp -f ${WORKDIR}/extra/immortalwrt/.config $imwrt_24/
