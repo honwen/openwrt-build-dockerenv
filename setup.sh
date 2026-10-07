@@ -49,6 +49,9 @@ hp_dir=$imwrt_24/package/feeds/luci-app-homeproxy
 [ -e $hp_dir ] ||
   git -C $imwrt_24/package/feeds clone https://github.com/szwjp/luci-app-homeproxy.git --branch=$hp_ver --depth=99
 
+[ -e $imwrt_24/package/feeds/luci-app-xray ] ||
+  git -C $imwrt_24/package/feeds clone https://github.com/honwen/luci-app-xray-fw4.git --depth=1
+
 cp -Rf ${WORKDIR}/extra/files $imwrt_24/
 cp -f ${WORKDIR}/extra/immortalwrt/.config $imwrt_24/
 
