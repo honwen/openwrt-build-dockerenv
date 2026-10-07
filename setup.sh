@@ -29,7 +29,7 @@ git -C $imwrt_24 log 2>/dev/null | grep -qF "$imwrt_24_ver" || {
 }
 
 rm -rf $imwrt_24/files $imwrt_24/package/feeds/luci/luci-app-homeproxy $imwrt_24/package/feeds/luci/luci-app-passwall $imwrt_24/package/feeds/luci/luci-app-v2raya $imwrt_24/feeds/luci/luci-app-gost package/feeds/luci/luci-app-frp* || :
-rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/packages/xray-core $imwrt_24/package/feeds/packages/xray-plugin $imwrt_24/package/feeds/packages/v2raya $imwrt_24/feeds/packages/gost package/feeds/packages/frp || :
+rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/packages/xray-core $imwrt_24/package/feeds/packages/xray-plugin $imwrt_24/package/feeds/packages/v2raya $imwrt_24/feeds/packages/gost$imwrt_24/package/feeds/packages/frp $imwrt_24/package/feeds/packages/hev-socks5-tunnel || :
 
 [ -e $imwrt_24/package/feeds/openwrt-dnsmasq-extra ] ||
   git -C $imwrt_24/package/feeds clone https://github.com/honwen/openwrt-dnsmasq-extra.git --depth=1
@@ -37,8 +37,17 @@ rm -rf $imwrt_24/package/feeds/packages/sing-box $imwrt_24/package/feeds/package
 [ -e $imwrt_24/package/feeds/openwrt-precompiled-feeds ] ||
   git -C $imwrt_24/package/feeds clone https://github.com/honwen/openwrt-precompiled-feeds.git --depth=1
 
-[ -e $imwrt_24/package/feeds/homeproxy ] ||
-  git -C $imwrt_24/package/feeds clone https://github.com/immortalwrt/homeproxy.git --branch=dev --depth=1
+# homeproxy: pinned, keep in sync with update.sh
+hp_ver='v27.919.1.14-r12'
+hp_dir=$imwrt_24/package/feeds/luci-app-homeproxy
+
+[ "$(git -C $hp_dir describe --tags --exact-match 2>/dev/null || :)" = "$hp_ver" ] ||
+  rm -rf $hp_dir
+
+# [ -e $imwrt_24/package/feeds/homeproxy ] ||
+#   git -C $imwrt_24/package/feeds clone https://github.com/immortalwrt/homeproxy.git --branch=dev --depth=1
+[ -e $hp_dir ] ||
+  git -C $imwrt_24/package/feeds clone https://github.com/szwjp/luci-app-homeproxy.git --branch=$hp_ver --depth=99
 
 cp -Rf ${WORKDIR}/extra/files $imwrt_24/
 cp -f ${WORKDIR}/extra/immortalwrt/.config $imwrt_24/
