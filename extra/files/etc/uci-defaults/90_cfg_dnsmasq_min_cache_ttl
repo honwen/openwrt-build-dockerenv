@@ -1,0 +1,12 @@
+#!/bin/sh
+#
+# Copyright (C) 2026 honwen.chan@gmail.com
+#
+
+# dnsmasq 缓存 TTL 下限：默认 3600s 会把 DDNS 记录（如 gz.xtun.xyz）的旧值钉住一小时，降到 6 分钟
+uci batch <<EOF
+	set dhcp.@dnsmasq[0].min_cache_ttl='360'
+	commit dhcp
+EOF
+
+exit 0
